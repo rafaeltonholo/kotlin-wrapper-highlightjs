@@ -1,3 +1,5 @@
+import dev.tonholo.kotlin.wrapper.highlightjs.KotlinWrapperHighlightJsConfig
+
 subprojects {
     repositories {
         mavenCentral()
@@ -8,6 +10,6 @@ subprojects {
 }
 
 allprojects {
-    group = "dev.tonholo.kotlin.wrapper.highlightjs"
-    version = "1.0.0-11.9.0"
+    group = KotlinWrapperHighlightJsConfig.GROUP
+    version = KotlinWrapperHighlightJsConfig.VERSION
 }

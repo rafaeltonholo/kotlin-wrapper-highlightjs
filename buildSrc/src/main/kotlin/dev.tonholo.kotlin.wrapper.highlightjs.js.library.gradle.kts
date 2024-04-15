@@ -1,6 +1,11 @@
+import com.codingfeline.buildkonfig.compiler.FieldSpec
+import dev.tonholo.kotlin.wrapper.highlightjs.HighlightJsConfig
+import dev.tonholo.kotlin.wrapper.highlightjs.KotlinWrapperHighlightJsConfig
+
 plugins {
     kotlin("multiplatform")
     id("npm-conventions")
+    id("com.codingfeline.buildkonfig")
 }
 
 kotlin {
@@ -12,13 +17,12 @@ kotlin {
         }
         binaries.executable()
     }
+}
 
-//    sourceSets {
-//        commonMain.dependencies {
-//            implementation(libs.kotlin.wrappers)
-//        }
-//        jsMain.dependencies {
-//            api(npm(name = "highlight.js", version = "11.9.0"))
-//        }
-//    }
+buildkonfig {
+    packageName = KotlinWrapperHighlightJsConfig.GROUP.plus(".core")
+
+    defaultConfigs {
+        buildConfigField(FieldSpec.Type.STRING, "HIGHLIGHTJS_VERSION", HighlightJsConfig.VERSION)
+    }
 }

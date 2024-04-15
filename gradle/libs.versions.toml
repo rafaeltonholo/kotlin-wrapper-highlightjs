@@ -5,6 +5,7 @@ kotlin = "1.9.23"
 ksp = "1.9.23-1.0.20"
 kotlin-wrappers = "1.0.1-pre.729"
 kotlinx-coroutines = "1.8.0"
+build-konfig = "0.15.1"
 
 [libraries]
 kobweb-api = { module = "com.varabyte.kobweb:kobweb-api", version.ref = "kobweb" }
@@ -13,9 +14,12 @@ kobweb-silk = { module = "com.varabyte.kobweb:kobweb-silk", version.ref = "kobwe
 kotlin-gradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 kotlin-wrappers = { module = "org.jetbrains.kotlin-wrappers:kotlin-extensions", version.ref = "kotlin-wrappers" }
 kotlinx-coroutines-core-js = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core-js", version.ref = "kotlinx-coroutines" }
+buildkonfig-gradle-plugin = { module = "com.codingfeline.buildkonfig:buildkonfig-gradle-plugin", version.ref = "build-konfig" }
+buildkonfig-compiler = { module = "com.codingfeline.buildkonfig:buildkonfig-compiler", version.ref = "build-konfig" }
 
 [plugins]
 jetbrains-compose = { id = "org.jetbrains.compose", version.ref = "jetbrains-compose" }
 kobweb-library = { id = "com.varabyte.kobweb.library", version.ref = "kobweb" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 com-google-devtools-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+com-codingfeline-buildkonfig = { id = "com.codingfeline.buildkonfig" }
