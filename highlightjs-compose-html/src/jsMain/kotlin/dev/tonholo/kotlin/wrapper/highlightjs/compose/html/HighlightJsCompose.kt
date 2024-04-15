@@ -10,6 +10,7 @@ import dev.tonholo.kotlin.wrapper.highlightjs.core.HighlightJs
 import dev.tonholo.kotlin.wrapper.highlightjs.core.highlightJs
 import dev.tonholo.kotlin.wrapper.highlightjs.core.language.SupportedLanguage
 import dev.tonholo.kotlin.wrapper.highlightjs.core.style.SupportedStyle
+import kotlinx.browser.document
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,8 +19,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import org.w3c.dom.Element
 import kotlin.time.Duration.Companion.milliseconds
-import kotlin.time.Duration.Companion.seconds
 
 @Composable
 fun HighlightJsEffect(
@@ -56,6 +57,12 @@ fun HighlightJsEffect(
     val highlightJsState by highlightJs.state.collectAsState()
     LaunchedEffect(highlightJsState) {
         if (highlightJsState == HighlightJsState.Completed) {
+            // TODO: by calling the highlightAll(), highlight.js is logging an warning
+            //  on the code blocks already highlighted.
+            //  Try to figure out how to get rid of it by, or highlighting each element
+            //  or unset the highlight on every highlightAll() call.
+            //  For now, we are removing the highlight and escaping the HTML to avoid
+            //  security issues.
             highlightJs.highlightAll()
         }
     }
@@ -121,6 +128,17 @@ class HighlightJsCompose(
 
     fun highlightAll() {
         if (state.value == HighlightJsState.Completed) {
+            val nodes = document.querySelectorAll("code[data-highlighted=\"yes\"]")
+            for (i in 0 until nodes.length) {
+                (nodes.item(i) as? Element)?.let { element ->
+                    element.attributes.removeNamedItem("class")
+                    element.attributes.removeNamedItem("data-highlighted")
+                    element.textContent = element.textContent
+                        ?.replace(Regex("<([a-zA-Z0-9 ]*)>"), "&lt;$0&gt;")
+                        ?.replace(Regex("</([a-zA-Z0-9]*)>"), "&lt;/$0&gt;")
+                }
+            }
+
             highlightJs.highlightAll()
         } else {
             console.warn("HighlightJs is not ready yet")

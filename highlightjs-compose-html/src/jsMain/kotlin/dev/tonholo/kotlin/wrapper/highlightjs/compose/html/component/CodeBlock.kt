@@ -45,7 +45,9 @@ fun CodeBlock(
     ) {
         Pre {
             Code {
-                Text(code)
+                Text(
+                    value = code,
+                )
             }
         }
 
