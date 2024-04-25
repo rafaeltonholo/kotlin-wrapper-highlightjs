@@ -133,9 +133,10 @@ class HighlightJsCompose(
                 (nodes.item(i) as? Element)?.let { element ->
                     element.attributes.removeNamedItem("class")
                     element.attributes.removeNamedItem("data-highlighted")
-                    element.textContent = element.textContent
-                        ?.replace(Regex("<([a-zA-Z0-9 ]*)>"), "&lt;$0&gt;")
-                        ?.replace(Regex("</([a-zA-Z0-9]*)>"), "&lt;/$0&gt;")
+                    element.innerHTML = element.textContent
+                        ?.replace(Regex("<([a-zA-Z0-9 ]*)>"), "&lt;$1&gt;")
+                        ?.replace(Regex("</([a-zA-Z0-9]*)>"), "&lt;/$1&gt;")
+                        .orEmpty()
                 }
             }
 
