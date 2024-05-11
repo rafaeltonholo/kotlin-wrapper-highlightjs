@@ -38,7 +38,6 @@ object HighlightJs : HighlightJsApi by hljs {
 @DslMarker
 annotation class HighlightJsDsl
 
-@HighlightJsDsl
 class HighlightJsBuilder {
     private val languages = mutableListOf<SupportedLanguage>()
     var style: SupportedStyle? = null
@@ -89,7 +88,9 @@ class HighlightJsBuilder {
     }
 }
 
+@HighlightJsDsl
 fun hljs(builder: HighlightJsBuilder.() -> Unit): HighlightJs = highlightJs(builder)
 
+@HighlightJsDsl
 fun highlightJs(builder: HighlightJsBuilder.() -> Unit): HighlightJs =
     HighlightJsBuilder().apply(builder).build()
